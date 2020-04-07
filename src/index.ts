@@ -1,4 +1,5 @@
 import * as tl from "azure-pipelines-task-lib/task";
+import * as colors from "colors";
 
 async function run() {
     try {
@@ -37,7 +38,7 @@ async function run() {
 
 
         if (stderr.length != 0) {
-            console.error(`\n\n\n\nWhy would these lines be in stderr????????????: \n${stderr}`);
+            console.error(colors.red(`\n\n\n\nWhy would these lines be in stderr????????????: \n${stderr}`));
         }
     }
     catch (err) {
