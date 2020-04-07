@@ -10,9 +10,19 @@ async function run() {
         command.arg(["build"]);
 
         // setup variable to store the command output
-        let output = "";
+        let stdout = "";
         command.on("stdout", data => {
-            output += data;
+            stdout += data;
+        });
+
+        // let stdline = "";
+        // command.on("stdline", data => {
+        //     stdline += data;
+        // });
+
+        let stderr = "";
+        command.on("stderr", data => {
+            stderr += data;
         });
 
 
@@ -20,7 +30,15 @@ async function run() {
         await command.exec()
         console.log("Command completed :)");
 
-        console.log(`\nAnd now for the full output:\n\n${output}`);
+        console.log("\nAnd now for the full output:");
+        console.log(`\n\n\n#### stdout:####\n\n${stdout}`);
+        // console.log(`\n\n\n#### stdline:####\n\n${stdline}`);
+        console.log(`\n\n\n#### stderr:####\n\n${stderr}`);
+
+
+        if (stderr.length != 0) {
+            console.error(`\n\n\n\nWhy would these lines be in stderr????????????: \n${stderr}`);
+        }
     }
     catch (err) {
         tl.setResult(tl.TaskResult.Failed, err.message);
