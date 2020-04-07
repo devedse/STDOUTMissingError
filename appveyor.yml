@@ -1,0 +1,13 @@
+version: 1.0.{build}
+os: Visual Studio 2019
+skip_tags: true
+configuration: Release
+
+before_build:
+  - npm install -g typescript
+
+build_script:
+  - cd src
+  - npm install
+  - tsc
+  - node index.js

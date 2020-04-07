@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  sample1:
+    image: ${DOCKER_REGISTRY-}sample1
+    build:
+      context: .
+      dockerfile: Project/Dockerfile
+  sample2:
+    image: ${DOCKER_REGISTRY-}sample2
+    build:
+      context: .
+      dockerfile: Project/Dockerfile
