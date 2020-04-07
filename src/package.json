@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "azure-pipelines-task-lib": "^2.9.3",
-    "colors": "^1.4.0"
+    "chalk": "^4.0.0"
   },
   "devDependencies": {
     "@types/node": "^13.9.5",
