@@ -30,7 +30,7 @@ Successfully built 6cac8912ab73
 Successfully tagged sample2:latest
 ```
 
-However when I read the `stdout` in my custom Azure DevOps task I see the following output:
+However when I read the `stdout` in my custom Azure DevOps task I see the same output except the 2 lines I added #### in front off:
 
 ```
 ##### Building sample1 <-- missing
@@ -53,12 +53,35 @@ Successfully built 6cac8912ab73
 Successfully tagged sample2:latest
 ```
 
-![](src/DeveDockerCaching.png)
+The code I'm currently using to call docker-compose and read the output is as follows:
 
-Note: This extension is currently under development.
+[./src/index.ts](index.ts)
+```
+console.log("Setup...");
+tl.cd("../SampleComposeProject");
+
+var command = tl.tool("docker-compose");
+command.arg(["-f", "docker-compose.yml"])
+command.arg(["build"]);
+
+// setup variable to store the command output
+let output = "";
+command.on("stdout", data => {
+    output += data;
+});
+
+
+console.log("Executing command...");
+await command.exec()
+console.log("Command completed :)");
+
+console.log(`\nAnd now for the full output:\n\n${output}`);
+```
 
 ## Build status
 
+To be able to easily reproduce the issue, I've also added the following automated buid pipelines. As you can see in the logging the STDOUT log lines are missing for `Building sample1` and `Building sample2`
+
 | Travis (Linux/Osx build) | AppVeyor (Windows build) |
 |:------------------------:|:------------------------:|
-| [![Build Status](https://travis-ci.org/devedse/DeveDockerCaching.svg?branch=master)](https://travis-ci.org/devedse/DeveDockerCaching) | [![Build status](https://ci.appveyor.com/api/projects/status/nirya7203ltfb8gn?svg=true)](https://ci.appveyor.com/project/devedse/devedockercaching) |
+| [![Build Status](https://travis-ci.org/devedse/STDOUTMissingError.svg?branch=master)](https://travis-ci.org/devedse/STDOUTMissingError) | [![Build status](https://ci.appveyor.com/api/projects/status/2js9l5te9md65reu?svg=true)](https://ci.appveyor.com/project/devedse/stdoutmissingerror) |
