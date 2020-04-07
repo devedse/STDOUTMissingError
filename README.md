@@ -55,7 +55,7 @@ Successfully tagged sample2:latest
 
 The code I'm currently using to call docker-compose and read the output is as follows:
 
-[./src/index.ts](index.ts)
+[./src/index.ts](./src/index.ts)
 ```
 console.log("Setup...");
 tl.cd("../SampleComposeProject");
